@@ -1,31 +1,36 @@
 import React, { Component } from 'react';
 import RestService from '../../shared/service';
-import axios from 'axios';
 
 class Home extends Component {
 
   constructor(props) {
     super(props);
     this.restService = new RestService();
-    this.state = { count: 10, items: null, persons: [] };
+    this.state = {
+      count: 10,
+      item: [],
+      persons: [],
+    };
   }
 
-  componentDidMount() {
-    axios.get(`https://jsonplaceholder.typicode.com/users`)
-      .then(res => {
-        const persons = res.data;
-        this.setState({ persons });
-      });
-  }
+  componentDidMount = async () => {
+    const res = await this.restService.getItem('https://jsonplaceholder.typicode.com/users');
+    const persons = res.data;
+    this.setState({ persons });
+    console.log('********************' + res.data);
+  };
 
   getItems = async () => {
-    const urlapi = 'AccountCode';
-    console.log(urlapi);
+    const res = await this.restService.getItem('https://jsonplaceholder.typicode.com/todos/1');
+    const item = res.data;
+    this.setState({ item });
+    console.log('********************' + res);
   };
 
   render() {
     return (
     <div className="grid-container" >
+      { this.state.item.userId}
       <div className="grid-item">Home11{this.state.count}</div>
       <button onClick={this.getItems} id="getItems">
         Get Items

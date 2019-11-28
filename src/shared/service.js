@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 class RestService {
 
   constructor() {
@@ -5,8 +7,8 @@ class RestService {
   }
 
   getItem(itemLink) {
-    return true;
-  }
+    return axios.get(itemLink);
+  };
 
   handleResponseError(response) {
     throw new Error('HTTP error, status = ' + response.status);
